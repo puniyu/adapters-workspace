@@ -1,0 +1,33 @@
+[workspace]
+members = ["puniyu_adapter_console"]
+resolver = "2"
+
+[workspace.lints.clippy]
+unwrap_used = "deny"
+
+[workspace.package]
+authors = ["wuliya <3369906077@qq.com>"]
+license = "LGPL-3.0-only"
+readme = "README.md"
+homepage = "https://github.com/puniyu/adapters-workspace"
+repository = "https://github.com/puniyu/adapters-workspace"
+edition = "2024"
+rust-version = "1.88.0"
+
+[workspace.dependencies]
+log = { version = "0.4.29" }
+bytes = { version = "1.11.1" }
+async-trait = { version = "0.1.89" }
+tokio = { version = "1.52.2" }
+
+puniyu_adapter = { version = "0.8.1" }
+
+[profile.release]
+lto = "fat"
+opt-level = "z"
+incremental = false
+
+[profile.dev]
+lto = false
+opt-level = 1
+incremental = true
