@@ -1,0 +1,17 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["github>puniyu/.github//.github/renovate"],
+  "packageRules": [
+    {
+      "groupName": "puniyu",
+      "matchDatasources": [
+        "crate"
+      ],
+      "matchPackageNames": [
+        "puniyu_adapter"
+      ],
+      "automerge": true,
+      "automergeType": "pr"
+    }
+  ]
+}
