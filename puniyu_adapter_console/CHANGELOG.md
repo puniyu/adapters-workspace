@@ -1,5 +1,13 @@
 # 变更日志
 
+## [0.8.1](https://github.com/puniyu/adapters-workspace/compare/v0.8.0...v0.8.1)
+
+### ⚙️ 杂项
+
+
+- 初始化项目 - ([f283b42](https://github.com/puniyu/adapters-workspace/commit/f283b42e345940468f5c5865b4f6aa6705fd9523))
+
+
 ## [0.8.0]
 
 ### 🚜 重构
