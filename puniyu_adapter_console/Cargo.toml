@@ -12,10 +12,8 @@ rust-version.workspace = true
 
 [dependencies]
 log.workspace = true
-async-trait.workspace = true
 bytes.workspace = true
 puniyu_adapter.workspace = true
-tokio = { version = "1", features = ["signal", "sync"] }
+puniyu_dispatch = { version = "0.8.16" }
+tokio = { version = "1.52.3", features = ["signal", "sync"] }
 rand = "0.10.0"
-
-puniyu_server = { version = "0.8.1" }

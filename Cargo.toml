@@ -15,12 +15,11 @@ edition = "2024"
 rust-version = "1.88.0"
 
 [workspace.dependencies]
-log = { version = "0.4.29" }
+log = { version = "0.4.32" }
 bytes = { version = "1.11.1" }
-async-trait = { version = "0.1.89" }
-tokio = { version = "1.52.2" }
+tokio = { version = "1.52.3" }
 
-puniyu_adapter = { version = "0.8.1" }
+puniyu_adapter = { version = "0.8.8" }
 
 [profile.release]
 lto = "fat"

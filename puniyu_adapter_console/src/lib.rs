@@ -1,65 +1,92 @@
 mod common;
 mod input;
-mod runtime;
-pub use runtime::Runtime;
+
+use std::sync::Arc;
 
 use log::info;
-use puniyu_adapter::app_name;
-use puniyu_adapter::bot::get_bot;
-use puniyu_adapter::macros::*;
-use std::sync::Arc;
+use puniyu_adapter::{
+	AdapterApi, AdapterCommunication, AdapterInfo, AdapterPlatform, AdapterProtocol,
+	AdapterStandard, SendMsgType, adapter_info, app_name, pkg_name, pkg_version, prelude::*,
+};
+
+use crate::common::make_random_id;
 
 pub(crate) const VERSION: puniyu_adapter::Version = pkg_version!();
 pub(crate) const NAME: &str = pkg_name!();
 
-#[adapter(runtime = runtime::runtime)]
-async fn main() -> puniyu_adapter::Result {
-	let bot_id = "console";
-	let name = app_name();
-	let adapter_runtime: Arc<dyn puniyu_adapter::runtime::AdapterRuntime> =
-		Arc::new(runtime::Runtime::new());
-	let bot = Arc::new(puniyu_adapter::bot::Bot::new(
-		Arc::clone(&adapter_runtime),
-		account_info!(
-			uin: bot_id,
-			name: format!("{}/{}", name, bot_id),
-			avatar: puniyu_server::get_logo(),
-		),
-	));
-	let bot_index = register_bot!(bot: bot)?;
+#[adapter]
+struct ConsoleAdapter;
 
-	info!(
-		"{} v{} 初始化完成",
-		adapter_runtime.adapter_info().name,
-		adapter_runtime.adapter_info().version
-	);
-
-	let bot = get_bot(bot_index).expect("bot just registered");
-	let (tx, mut rx) = tokio::sync::mpsc::unbounded_channel::<String>();
-
-	std::thread::spawn(move || {
-		use std::io::BufRead;
-		let stdin = std::io::stdin();
-		for line in stdin.lock().lines() {
-			match line {
-				Ok(s) => {
-					let _ = tx.send(s);
+#[adapter]
+impl ConsoleAdapter {
+	#[on_load]
+	async fn on_load() -> puniyu_adapter::result::Result {
+		let adapter = Arc::new(ConsoleAdapter);
+		let info = adapter.adapter_info();
+		let adapter_runtime = AdapterRuntime::new(adapter);
+		let bot_runtime = BotRuntime::new(adapter_runtime);
+		if let Ok(bot_id) = register_bot!(runtime: bot_runtime) {
+			info!("{} v{} 初始化完成", info.name, info.version);
+			let bot = BotRegistry::get_with_index(bot_id).unwrap();
+			let (tx, mut rx) = tokio::sync::mpsc::unbounded_channel::<String>();
+			std::thread::spawn(move || {
+				use std::io::BufRead;
+				let stdin = std::io::stdin();
+				for line in stdin.lock().lines() {
+					match line {
+						Ok(s) => {
+							let _ = tx.send(s);
+						}
+						Err(_) => break,
+					}
 				}
-				Err(_) => break,
-			}
+			});
+			tokio::spawn(async move {
+				while let Some(message) = rx.recv().await {
+					if matches!(message.as_str(), "quit" | "exit" | "q") {
+						break;
+					}
+
+					let parsed = input::parse_console_input(&message);
+					common::dispatch_event(bot.as_ref(), &parsed).await;
+				}
+			});
 		}
-	});
 
-	tokio::spawn(async move {
-		while let Some(message) = rx.recv().await {
-			if matches!(message.as_str(), "quit" | "exit" | "q") {
-				break;
-			}
+		Ok(())
+	}
+}
 
-			let parsed = input::parse_console_input(&message);
-			common::dispatch_event(bot.as_ref(), &parsed, name).await;
-		}
-	});
+#[puniyu_adapter::async_trait::async_trait]
+impl AdapterApi for ConsoleAdapter {
+	fn adapter_info(&self) -> AdapterInfo {
+		adapter_info!(
+			name: NAME,
+			version: VERSION,
+			platform: AdapterPlatform::Other,
+			standard: AdapterStandard::Other,
+			protocol: AdapterProtocol::Console,
+			communication: AdapterCommunication::Other,
+		)
+	}
+	fn account_info(&self) -> AccountInfo {
+		account_info!(
+			uin: "console",
+			name: format!("{}/{}", app_name(), "console"),
+			avatar: get_logo(),
+		)
+	}
+	async fn send_message(
+		&self,
+		_contact: &ContactType<'_>,
+		_message: &Message,
+	) -> puniyu_adapter::result::Result<SendMsgType> {
+		let message_id = make_random_id();
+		let timestamp = std::time::SystemTime::now()
+			.duration_since(std::time::UNIX_EPOCH)
+			.map_err(Box::<dyn std::error::Error + Send + Sync>::from)?
+			.as_secs();
 
-	Ok(())
+		Ok(SendMsgType { message_id, time: std::time::Duration::from_secs(timestamp) })
+	}
 }
