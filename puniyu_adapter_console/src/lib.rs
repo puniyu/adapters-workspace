@@ -90,3 +90,10 @@ impl AdapterApi for ConsoleAdapter {
 		Ok(SendMsgType { message_id, time: std::time::Duration::from_secs(timestamp) })
 	}
 }
+
+
+impl Default for Adapter {
+	fn default() -> Self {
+		Self(ConsoleAdapter)
+	}
+}

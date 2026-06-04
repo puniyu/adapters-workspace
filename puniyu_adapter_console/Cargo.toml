@@ -1,6 +1,6 @@
 [package]
 name = "puniyu_adapter_console"
-version = "0.8.1"
+version = "0.8.2"
 description = "puniyu的控制台适配器"
 authors.workspace = true
 license.workspace = true
@@ -12,8 +12,6 @@ rust-version.workspace = true
 
 [dependencies]
 log.workspace = true
-bytes.workspace = true
 puniyu_adapter.workspace = true
-puniyu_dispatch = { version = "0.8.16" }
 tokio = { version = "1.52.3", features = ["signal", "sync"] }
 rand = "0.10.0"

@@ -1795,12 +1795,10 @@ dependencies = [
 
 [[package]]
 name = "puniyu_adapter_console"
-version = "0.8.1"
+version = "0.8.2"
 dependencies = [
- "bytes",
  "log",
  "puniyu_adapter",
- "puniyu_dispatch",
  "rand 0.10.1",
  "tokio",
 ]
