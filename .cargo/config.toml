@@ -1,2 +1,0 @@
-[patch.crates-io]
-# puniyu_adapter = { path = "../puniyu/crates/puniyu_adapter" }
