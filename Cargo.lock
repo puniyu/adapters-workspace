@@ -467,7 +467,7 @@ version = "3.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "faf9468729b8cbcea668e36183cb69d317348c2e08e994829fb56ebfdfbaac34"
 dependencies = [
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -1780,9 +1780,9 @@ dependencies = [
 
 [[package]]
 name = "puniyu_adapter_api"
-version = "0.8.17"
+version = "0.8.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "39c7fa483118b52282bca239cb0fc6c0c6ae5689d60b1e4d24fb7413a55970a5"
+checksum = "362512115f4b042a3e22b2d6813bc2c7a1e15b1a6c835df1eeef48404188258f"
 dependencies = [
  "anyhow",
  "async-trait",
@@ -1827,9 +1827,9 @@ dependencies = [
 
 [[package]]
 name = "puniyu_adapter_types"
-version = "0.8.17"
+version = "0.8.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3d39b311106a77c5a76bb3fe63f3f453a0664f2aaac7330883015e40b717eb4e"
+checksum = "2d429ca7ded6794078b3f6eed71c5f842170d8417421cec135a22663d31a2324"
 dependencies = [
  "bon",
  "bytes",
@@ -1880,9 +1880,9 @@ dependencies = [
 
 [[package]]
 name = "puniyu_bot"
-version = "0.8.16"
+version = "0.8.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a1d6414adcbd78fa4a96c83c340c0e1938c8b41c0d95ec4595f603971d3a4753"
+checksum = "81e47cf128ef1010537dc1101a21cf094997bb6298da43cf2b8b0e8df408d87a"
 dependencies = [
  "log",
  "puniyu_account",
@@ -2027,9 +2027,9 @@ dependencies = [
 
 [[package]]
 name = "puniyu_dispatch"
-version = "0.8.16"
+version = "0.8.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0050b64398b61fce8e03431f657c7dc4d0fa40c67e829cef4c358a998e063e70"
+checksum = "b4bd78b2786cf3133faed19934250304588944df00dca31872dfdd9044923bf5"
 dependencies = [
  "log",
  "puniyu_event",
@@ -2061,9 +2061,9 @@ dependencies = [
 
 [[package]]
 name = "puniyu_event"
-version = "0.8.16"
+version = "0.8.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6f138fbd32937118a789fc21ce303f3d54bfe057fb9f8b8ddd63201fa4c4f35f"
+checksum = "a6f8af8784bd61262710aca139744246c6800a454a018d7da66b9ab74f96ecee"
 dependencies = [
  "bytes",
  "derive_more",
@@ -2078,9 +2078,9 @@ dependencies = [
 
 [[package]]
 name = "puniyu_handler"
-version = "0.8.16"
+version = "0.8.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c2f952c5aa5906f3d78420954ed76c687bdcdf8c344fe549b1b0045f91a88350"
+checksum = "99420714b2dcbb091035d321953ec6440ce340e6da98a6c02088b94aeee02ef4"
 dependencies = [
  "async-trait",
  "puniyu_error",
@@ -2179,9 +2179,9 @@ dependencies = [
 
 [[package]]
 name = "puniyu_runtime"
-version = "0.8.16"
+version = "0.8.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3881c7bfcccc64c33a2804df36a7b25827fbde5c7cecbdaec0b77d62b00b9053"
+checksum = "1d804e9e5b2bcc0465657dd02e7eac56303249c6fbfcdfa5d70fd29af0239bee"
 dependencies = [
  "actix-web",
  "puniyu_account",
@@ -2610,7 +2610,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3a766e1110788c36f4fa1c2b71b387a7815aa65f88ce0229841826633d93723e"
 dependencies = [
  "libc",
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -3284,7 +3284,7 @@ version = "0.1.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "c2a7b1c03c876122aa43f3020e6c3c3ee5c05081c9a00739faf7503aeba10d22"
 dependencies = [
- "windows-sys 0.61.2",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
