@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 检出仓库
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
           repository: ${{ github.event.pull_request.head.repo.full_name || github.repository }}
@@ -30,7 +30,8 @@ jobs:
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
 
       - name: 运行 release-plz
-        uses: release-plz/action@064f4d1e36c843611ddf013be726beaa4ad804db # v0.5
+        id: release
+        uses: puniyu/release-action@493d4a9830164de9d89a3f665d1aac70948656b3 # main
         with:
           command: release
         env:
@@ -38,7 +39,8 @@ jobs:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CRATES_API_TOKEN }}
           
       - name: 运行 release-plz
-        uses: release-plz/action@064f4d1e36c843611ddf013be726beaa4ad804db # v0.5
+        if: ${{ steps.release.outputs.releases_created == 'false' }}
+        uses: puniyu/release-action@493d4a9830164de9d89a3f665d1aac70948656b3 # main
         with:
           command: release-pr
         env:
