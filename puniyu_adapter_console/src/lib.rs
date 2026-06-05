@@ -1,7 +1,7 @@
 mod common;
 mod input;
 
-use std::sync::Arc;
+use std::sync::{Arc, OnceLock};
 
 use log::info;
 use puniyu_adapter::{
@@ -14,6 +14,13 @@ use crate::common::make_random_id;
 pub(crate) const VERSION: puniyu_adapter::Version = pkg_version!();
 pub(crate) const NAME: &str = pkg_name!();
 
+struct OutputMessage {
+	contact: String,
+	message: String,
+}
+
+static OUTPUT_TX: OnceLock<tokio::sync::mpsc::UnboundedSender<OutputMessage>> = OnceLock::new();
+
 #[adapter]
 struct ConsoleAdapter;
 
@@ -21,7 +28,7 @@ struct ConsoleAdapter;
 impl ConsoleAdapter {
 	#[on_load]
 	async fn on_load() -> puniyu_adapter::result::Result {
-		let adapter = Arc::new(ConsoleAdapter);
+		let adapter = Arc::new(Adapter);
 		let info = adapter.adapter_info();
 		let adapter_runtime = AdapterRuntime::new(adapter);
 		let bot_runtime = BotRuntime::new(adapter_runtime);
@@ -51,6 +58,14 @@ impl ConsoleAdapter {
 					common::dispatch_event(bot.as_ref(), &parsed).await;
 				}
 			});
+
+			let (out_tx, mut out_rx) = tokio::sync::mpsc::unbounded_channel::<OutputMessage>();
+			let _ = OUTPUT_TX.set(out_tx);
+			tokio::spawn(async move {
+				while let Some(message) = out_rx.recv().await {
+					info!("收到来自{}的消息: {}", message.contact, message.message)
+				}
+			});
 		}
 
 		Ok(())
@@ -58,7 +73,7 @@ impl ConsoleAdapter {
 }
 
 #[puniyu_adapter::async_trait::async_trait]
-impl AdapterApi for ConsoleAdapter {
+impl AdapterApi for Adapter {
 	fn adapter_info(&self) -> AdapterInfo {
 		adapter_info!(
 			name: NAME,
@@ -78,9 +93,16 @@ impl AdapterApi for ConsoleAdapter {
 	}
 	async fn send_message(
 		&self,
-		_contact: &ContactType<'_>,
-		_message: &Message,
+		contact: &ContactType<'_>,
+		message: &Message,
 	) -> puniyu_adapter::result::Result<SendMsgType> {
+		if let Some(tx) = OUTPUT_TX.get() {
+			let _ = tx.send(OutputMessage {
+				contact: contact.peer().to_string(),
+				message: format!("{:#?}", message),
+			});
+		}
+
 		let message_id = make_random_id();
 		let timestamp = std::time::SystemTime::now()
 			.duration_since(std::time::UNIX_EPOCH)
@@ -88,12 +110,5 @@ impl AdapterApi for ConsoleAdapter {
 			.as_secs();
 
 		Ok(SendMsgType { message_id, time: std::time::Duration::from_secs(timestamp) })
-	}
-}
-
-
-impl Default for Adapter {
-	fn default() -> Self {
-		Self(ConsoleAdapter)
 	}
 }
