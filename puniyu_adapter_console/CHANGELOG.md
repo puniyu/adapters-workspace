@@ -1,5 +1,13 @@
 # 变更日志
 
+## [0.8.4](https://github.com/puniyu/adapters-workspace/compare/v0.8.3...v0.8.4)
+
+### ⚙️ 杂项
+
+
+- Update Cargo.toml dependencies - ([0000000](https://github.com/puniyu/adapters-workspace/commit/0000000))
+
+
 ## [0.8.3](https://github.com/puniyu/adapters-workspace/compare/v0.8.2...v0.8.3)
 
 ### 🐛 Bug 修复
