@@ -1,5 +1,13 @@
 # 变更日志
 
+## [0.8.3](https://github.com/puniyu/adapters-workspace/compare/v0.8.2...v0.8.3)
+
+### 🐛 Bug 修复
+
+
+- Fix - ([0476e3b](https://github.com/puniyu/adapters-workspace/commit/0476e3bd59370aae1b6183b1134ce6ad3d78925f))
+
+
 ## [0.8.1](https://github.com/puniyu/adapters-workspace/compare/v0.8.0...v0.8.1)
 
 ### 🚜 重构
