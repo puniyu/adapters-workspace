@@ -1767,9 +1767,9 @@ dependencies = [
 
 [[package]]
 name = "puniyu_adapter"
-version = "0.8.11"
+version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "56002753ac2eca07b31ba15e402ebd2c8ee964734c44aa1ab42cf1a6b3ff7e5c"
+checksum = "51def8df6df24ed754c22d04f1d01ef759a377a81253e2d897b16db14a66c169"
 dependencies = [
  "puniyu_core",
  "puniyu_macros",
@@ -2140,9 +2140,9 @@ dependencies = [
 
 [[package]]
 name = "puniyu_macros"
-version = "0.8.10"
+version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "feb19d7479f1eec41c189db8fecd5e9ee2dfdfdf16e88fc44af82eb3b881481e"
+checksum = "a6b1b32761489ae09f6d281a46c3cb5166b0d6f727bf7439e9720944c7f9477f"
 dependencies = [
  "convert_case 0.11.0",
  "croner",
