@@ -1794,7 +1794,7 @@ dependencies = [
 
 [[package]]
 name = "puniyu_adapter_console"
-version = "0.8.2"
+version = "0.8.3"
 dependencies = [
  "log",
  "puniyu_adapter",
